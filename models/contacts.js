@@ -1,9 +1,9 @@
-const fs = require('fs/promises')
+import { promises as fs } from "fs";
 import path from "path";
 import { nanoid } from "nanoid";
 const contactsPath = path.join(process.cwd(), "contacts.json");
 
-const listContacts = async () => {
+export const listContacts = async () => {
   const contacts = await fs.readFile(contactsPath, { encoding: "utf-8" });
   if (!contacts) {
     throw new Error("There are no contacts".red);
@@ -11,7 +11,7 @@ const listContacts = async () => {
   return JSON.parse(contacts);
 }
 
-const getContactById = async (contactId) => {
+export const getContactById = async (contactId) => {
   const allContacts = await listContacts();
   const contact = allContacts.find((contact) => contact.id === contactId);
   if (!contact) {
@@ -20,7 +20,7 @@ const getContactById = async (contactId) => {
   return contact;
 }
 
-const removeContact = async (contactId) => {
+export const removeContact = async (contactId) => {
   const allContacts = await listContacts();
     const filteredContacts = allContacts.filter(
       (contact) => contact.id !== contactId
@@ -28,7 +28,7 @@ const removeContact = async (contactId) => {
     fs.writeFile(contactsPath, JSON.stringify(filteredContacts));
 }
 
-const addContact = async ({name, email, phone}) => {
+export const addContact = async ({name, email, phone}) => {
   const allContacts = await listContacts();
   const newContact = {
     contactId: nanoid(),
@@ -50,7 +50,7 @@ const addContact = async ({name, email, phone}) => {
   return newContact;
 }
 
-const updateContact = async (contactId, {name, email, phone}) => {
+export const updateContact = async (contactId, {name, email, phone}) => {
   const allContacts = listContacts();
   const existingContact = allContacts.find(
     (contact) => contact.id === contactId
@@ -65,12 +65,4 @@ const updateContact = async (contactId, {name, email, phone}) => {
     const newContact = await addContact({name, email, phone});
     return newContact;
   }
-}
-
-module.exports = {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
 }
