@@ -1,13 +1,10 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { nanoid } from "nanoid";
-const contactsPath = path.join(process.cwd(), "contacts.json");
+const contactsPath = path.join(process.cwd(), "db", "contacts.json");
 
 export const listContacts = async () => {
-  const contacts = await fs.readFile(contactsPath, { encoding: "utf-8" });
-  if (!contacts) {
-    throw new Error("There are no contacts".red);
-  }
+  const contacts = await fs.readFile(contactsPath);
   return JSON.parse(contacts);
 }
 
@@ -15,17 +12,17 @@ export const getContactById = async (contactId) => {
   const allContacts = await listContacts();
   const contact = allContacts.find((contact) => contact.id === contactId);
   if (!contact) {
-    throw new Error(`There is no contact with id ${contactId}`.red);
+    throw new Error(`There is no contact with id ${contactId}`);
   }
   return contact;
 }
 
 export const removeContact = async (contactId) => {
   const allContacts = await listContacts();
-    const filteredContacts = allContacts.filter(
-      (contact) => contact.id !== contactId
-    );
-    fs.writeFile(contactsPath, JSON.stringify(filteredContacts));
+  const filteredContacts = allContacts.filter(
+    (contact) => contact.id !== contactId
+  );
+  fs.writeFile(contactsPath, JSON.stringify(filteredContacts));
 }
 
 export const addContact = async ({name, email, phone}) => {
@@ -42,7 +39,7 @@ export const addContact = async ({name, email, phone}) => {
   );
 
   if (existingContact) {
-    throw new Error(`${newContact.name} is already in contacts list.`.red);
+    throw new Error(`${newContact.name} is already in contacts list.`);
     return;
   }
   allContacts.push(newContact);
