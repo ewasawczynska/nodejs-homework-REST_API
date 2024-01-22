@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 
-import { listContacts, getContactById, addContact } from '../../models/contacts.js'
+import { listContacts, getContactById, addContact, removeContact, updateContact } from '../../models/contacts.js'
 
 router.get('/', async (req, res, next) => {
   const allContacts = await listContacts();
@@ -32,11 +32,30 @@ router.post('/', async (req, res, next) => {
 })
 
 router.delete('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
+  const { contactId } = req.params;
+  try {
+    await removeContact();
+    res.status(200).json({ message: 'contact deleted'});
+    return;
+  }
+  catch(error) {
+    res.status(404).json({ message: 'not found'});
+  }
 })
 
 router.put('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
+  const { contactId } = req.params;
+  const body = req.body;
+  if (Object.keys(req.body).length === 0) {
+    res.status(400).json({ message: 'missing fields' });
+    return;
+  }
+  try {
+    const contact = await updateContact(contactId, body);
+    return res.status(200).json(contact);
+  } catch (error) {
+    res.status(404).json({ message: 'not found' });
+  }
 })
 
 module.exports = router
