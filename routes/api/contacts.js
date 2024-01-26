@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-
+import { validation } from "../../validation/validation.js";
 import { listContacts, getContactById, addContact, removeContact, updateContact } from '../../models/contacts.js';
 
 router.get('/', async (req, res, next) => {
@@ -11,14 +11,14 @@ router.get('/', async (req, res, next) => {
 router.get('/:contactId', async (req, res, next) => {
   const { contactId } = req.params;
   try {
-  const contacts = getContactById(contactId);
+  const contacts = await getContactById(contactId);
   return res.status(200).json(contacts);
   } catch {
   res.status(404).json({message: 'Not found'});
   };
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', validation, async (req, res, next) => {
   const body = req.body;
   if (Object.keys(req.body).length === 0) {
     res.status(400).json({ message: 'missing required field' });
@@ -33,7 +33,7 @@ router.post('/', async (req, res, next) => {
 router.delete('/:contactId', async (req, res, next) => {
   const { contactId } = req.params;
   try {
-    await removeContact();
+    await removeContact(contactId);
     res.status(200).json({ message: 'contact deleted'});
     return;
   }
@@ -42,7 +42,7 @@ router.delete('/:contactId', async (req, res, next) => {
   }
 })
 
-router.put('/:contactId', async (req, res, next) => {
+router.put('/:contactId', validation, async (req, res, next) => {
   const { contactId } = req.params;
   const body = req.body;
   if (Object.keys(req.body).length === 0) {
