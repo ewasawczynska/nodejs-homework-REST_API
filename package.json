@@ -6,7 +6,8 @@
   "imports": {
     "#validation/*": "./validation/*",
     "#controllers/*": "./controllers/*",
-    "#models/*": "./models/*"
+    "#models/*": "./models/*",
+    "#schemas/*": "./service/schemas/*"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./server.js",

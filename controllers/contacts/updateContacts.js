@@ -1,4 +1,4 @@
-import { updateContact } from '#models/contacts.js';
+import Contact from '#schemas/contact.js';
 
 export const updateContacts = async (req, res, next) => {
     const { contactId } = req.params;
@@ -8,7 +8,7 @@ export const updateContacts = async (req, res, next) => {
       return;
     }
     try {
-      const contact = await updateContact(contactId, body);
+      const contact = await Contact.findOneAndUpdate(contactId, body);
       return res.status(200).json(contact);
     } catch (error) {
       res.status(404).json({ message: 'not found' });

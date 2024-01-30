@@ -1,9 +1,9 @@
-import { getContactById } from '#models/contacts.js';
+import Contact from '#schemas/contact.js';
 
 export const showContacts = async (req, res, next) => {
+  const { contactId } = req.params;
     try {
-    const { contactId } = req.params;
-    const contacts = await getContactById(contactId);
+    const contacts = await Contact.findOne({ _id: contactId });
     return res.status(200).json(contacts);
     } catch {
     res.status(404).json({message: 'Not found'});

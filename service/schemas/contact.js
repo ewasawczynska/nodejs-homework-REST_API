@@ -1,32 +1,28 @@
 import { Schema, model } from "mongoose";
 
-const {Schema, model} = require('mongoose');
-
 const contactSchema = new Schema(
   {
     name: {
       type: String,
       unique: true,
-      maxlength: 70,
-      required: true,
+      required: [true, "Set name for contact"],
     },
     email: {
       type: String,
       unique: true,
-      minlength: 3,
-      maxlength: 170,
     },
     phone: {
       type: String,
       unique: true,
     },
-    favourite: {
-        type: Boolean,
-      },
+    favorite: {
+      type: Boolean,
+      default: false,
+    },
   },
-  { versionKey: false, timestamps: true },
+  { versionKey: false, timestamps: false }
 );
 
-const contactModel = model("contact", contactSchema);
+const Contact = model("contact", contactSchema);
 
-export default contactModel;
+export default Contact;
