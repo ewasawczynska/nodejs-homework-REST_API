@@ -1,6 +1,6 @@
-import { updateContact } from '#models/contacts.js';
+import Contact from '#schemas/contact.js';
 
-export const updateContacts = async (req, res, next) => {
+export const updateContacts = async (req, res) => {
     const { contactId } = req.params;
     const body = req.body;
     if (Object.keys(req.body).length === 0) {
@@ -8,9 +8,12 @@ export const updateContacts = async (req, res, next) => {
       return;
     }
     try {
-      const contact = await updateContact(contactId, body);
-      return res.status(200).json(contact);
+      await Contact.findByIdAndUpdate(contactId, body);
+      return res.status(200).json({
+        contactId, ...body
+      });
     } catch (error) {
+      console.log(error);
       res.status(404).json({ message: 'not found' });
     }
   }

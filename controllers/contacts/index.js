@@ -3,3 +3,4 @@ export * from "./deleteContacts.js";
 export * from "./indexContacts.js";
 export * from "./showContacts.js";
 export * from "./updateContacts.js";
+export * from "./patchContacts.js";
