@@ -13,6 +13,6 @@ router.delete('/:contactId', deleteContacts);
 
 router.put('/:contactId', updateContacts);
 
-router.patch("/:contactId/favorite", patchContacts);
+router.patch('/:contactId/favorite', patchContacts);
 
 export { router as contactsRouter };
