@@ -1,21 +1,19 @@
-import passport from "passport";
 import passportJWT from "passport-jwt";
-import { config } from "dotenv";
-
 import User from '#schemas/user.js';
-
+import { config } from "dotenv";
 config();
 
+const secret = process.env.SECRET;
 const ExtractJWT = passportJWT.ExtractJwt;
 const Strategy = passportJWT.Strategy;
-const params = {
-  secretOrKey: process.env.JWT_SECRET,
-  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-};
 
-passport.use(
-    new Strategy(params, function (payload, done) {
-      User.find({ _id: payload.id })
+export const jwt = new passportJWT.Strategy(
+  {
+    secretOrKey: secret,
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  },
+  (payload, done) => {
+    User.find({ _id: payload.id })
         .then(([user]) => {
           if (!user) {
             return done(new Error('User not found'));
@@ -26,5 +24,5 @@ passport.use(
             console.log(err);
             return done(err);
           });
-    }),
-  );
+  }
+);

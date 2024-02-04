@@ -7,7 +7,8 @@
     "#validation/*": "./validation/*",
     "#controllers/*": "./controllers/*",
     "#models/*": "./models/*",
-    "#schemas/*": "./service/schemas/*"
+    "#schemas/*": "./service/schemas/*",
+    "#auth/*": "./auth/*"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./server.js",
