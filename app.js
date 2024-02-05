@@ -4,11 +4,13 @@ import cors from "cors";
 
 import { contactsRouter } from "./routes/contacts.js";
 import { usersRouter } from "./routes/users.js";
+import { jwtMiddleware } from "#auth/middleware.js";
 
 const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 
+jwtMiddleware(app);
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
