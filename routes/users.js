@@ -4,9 +4,9 @@ import { auth } from '#auth/index.js';
 
 import { signup, login, logout, current } from '#controllers/users/index.js';
 
-router.post('/signup', signup);
+router.post('/signup', auth, signup);
 
-router.post("/login", login);
+router.post("/login", auth, login);
 
 router.get("/logout", auth, logout);
 

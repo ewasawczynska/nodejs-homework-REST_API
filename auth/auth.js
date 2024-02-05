@@ -2,12 +2,12 @@ import passport from "passport";
 import { jwt } from './jwt.js';
 
 export const auth = (req, res, next) => {
-    passport.authenticate(jwt, { session: false }, (err, user) => {
+    passport.authenticate(jwt, (err, user) => {
       if (!user || err) {
         return res.status(401).json({
           status: 'error',
           code: 401,
-          message: 'Unauthorized',
+          message: 'Token is invalid',
           data: 'Unauthorized',
         });
       }

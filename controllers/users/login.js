@@ -17,7 +17,7 @@ export const login = async (req, res) => {
           message: "Email or password is wrong",
         });
       }
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: user._id }, process.env.SECRET);
       return res.status(200).json({
         status: "Success",
         code: 200,

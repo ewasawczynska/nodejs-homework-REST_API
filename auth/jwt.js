@@ -1,16 +1,12 @@
-import passportJWT from "passport-jwt";
+import pasportJwt from "passport-jwt";
 import User from '#schemas/user.js';
 import { config } from "dotenv";
 config();
 
-const secret = process.env.SECRET;
-const ExtractJWT = passportJWT.ExtractJwt;
-const Strategy = passportJWT.Strategy;
-
-export const jwt = new passportJWT.Strategy(
+export const jwt = new pasportJwt.Strategy(
   {
-    secretOrKey: secret,
-    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    secretOrKey: process.env.SECRET,
+    jwtFromRequest: pasportJwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
   },
   (payload, done) => {
     User.find({ _id: payload.id })
