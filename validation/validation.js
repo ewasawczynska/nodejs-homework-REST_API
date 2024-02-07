@@ -1,17 +1,6 @@
 import Joi from "joi";
 
-const schema = Joi.object({
-    name: Joi.string().alphanum().min(3).max(30).required(),
+export const schema = Joi.object({
     email: Joi.string().email().required(),
-    phone: Joi.string().min(7).max(20).required(),
+    password: Joi.string().min(7).required(),
   });
-  
-  const validation = (req, res, next) => {
-    const { error } = schema.validate(req.body);
-    if (error) {
-      return res.status(400).json(error.message);
-    }
-    next();
-  };
-  
-  export { validation };
