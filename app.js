@@ -4,7 +4,7 @@ import cors from "cors";
 
 import { contactsRouter } from "./routes/contacts.js";
 import { usersRouter } from "./routes/users.js";
-import { jwtMiddleware } from "#auth/middleware.js";
+import { jwtMiddleware } from "#middleware/middleware.js";
 
 const app = express();
 
