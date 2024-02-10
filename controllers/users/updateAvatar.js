@@ -5,7 +5,6 @@ import { photoSize } from "#helpers/index.js";
 export const updateAvatar = async (req, res, next) => {
   try {
     const { id } = req.user;
-
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
     }

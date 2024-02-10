@@ -18,6 +18,4 @@ export const current = async (req, res) => {
       data: "Not authorized",
     })
   }
-    
-    
-  };
+};

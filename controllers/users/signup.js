@@ -3,7 +3,6 @@ import { schema } from '#validation/validation.js';
 
 export async function signup(req, res, next) {
     const { email, password } = req.body;
-
     const { error } = schema.validate(req.body);
     if (error) {
       return res.status(400).json({ message: error.message });

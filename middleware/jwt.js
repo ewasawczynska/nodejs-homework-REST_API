@@ -1,6 +1,7 @@
 import passportJWT from "passport-jwt";
-import User from '#schemas/user.js';
 import { config } from "dotenv";
+import User from '#schemas/user.js';
+
 config();
 
 export const jwt = new passportJWT.Strategy(

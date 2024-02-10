@@ -1,7 +1,6 @@
 import multer from "multer";
 import { v4 as uuidv4 } from "uuid";
 import path from "path";
-
 import { setup } from "#helpers/index.js";
 
 const tempDir = path.join(process.cwd(), "temp");
@@ -31,7 +30,7 @@ export const uploadMiddleware = multer({
     ) {
       return cb(null, false);
     }
-
+    
     return cb(null, true);
   },
   limits: {
