@@ -12,7 +12,7 @@ export const verificationMail = async (email, verificationToken) => {
     from: "sawczynska.e@gmail.com",
     subject: "Email Verification",
     text: `Click the following link to verify your email: ${verificationLink}`,
-    html: `<strong>Click the following link to verify your email:<a href="${verificationLink}">${verificationLink}</a></strong>`,
+    html: `<strong>Click the following link to verify your email: <a href="${verificationLink}"><i> -> link <- </i></a></strong>`,
   };
 
   sgMail

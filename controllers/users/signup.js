@@ -1,5 +1,7 @@
+import { v4 as uuidv4 } from "uuid";
 import User from '#schemas/user.js';
 import { schema } from '#validation/validation.js';
+import { verificationMail } from '#helpers/index.js';
 
 export async function signup(req, res, next) {
     const { email, password } = req.body;
@@ -28,16 +30,18 @@ export async function signup(req, res, next) {
       });
     }
 
-    const newUser = new User({ email });
+    const verificationToken = uuidv4();
+    const newUser = new User({ email, verificationToken });
     const { subscription } = newUser;
     newUser.setAvatar(email);
     await newUser.setPassword(password);
     await newUser.save();
+    await verificationMail(email, verificationToken);
       res.status(201).json({
         status: 'success',
         code: 201,
         data: {
-          message: 'Registration successful',
+          message: 'Registration successful. Please check your mailbox and verify your email.',
         },
       });
     } catch (error) {
