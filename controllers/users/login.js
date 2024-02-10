@@ -1,6 +1,6 @@
+import jwt from "jsonwebtoken";
 import User from '#schemas/user.js';
 import { schema } from '#validation/validation.js';
-import jwt from "jsonwebtoken";
 
 export const login = async (req, res) => {
     const { email, password } = req.body;

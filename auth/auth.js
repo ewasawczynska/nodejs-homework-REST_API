@@ -1,5 +1,5 @@
 import passport from "passport";
-import { jwt } from './jwt.js';
+import { jwt } from "#middleware/jwt.js";
 
 export const auth = (req, res, next) => {
     passport.authenticate(jwt, (err, user) => {

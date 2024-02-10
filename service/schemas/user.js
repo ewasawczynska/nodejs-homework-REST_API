@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
+import gravatar from "gravatar";
 
 const userSchema = new Schema(
 {
@@ -21,6 +22,9 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
+    avatarURL: {
+      type: String,
+    },
   },
   { versionKey: false, timestamps: false }
 );
@@ -33,6 +37,11 @@ userSchema.methods.setPassword = async function (password) {
 
 userSchema.methods.validPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.setAvatar = async function (email) {
+  const avatar = gravatar.profile_url(email);
+  this.avatarURL = avatar;
 };
 
 const User = model("User", userSchema);
